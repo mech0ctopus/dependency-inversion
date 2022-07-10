@@ -34,19 +34,19 @@ In C++, an abstract class with virtual methods defines an interface (e.g., `Cont
 
 To compile:
 ```
-cd dependency_inversion
+cd dependency-inversion
 mkdir build && cd build
 cmake ..
 make -j4
 ```
 To run the naive example:
 ```
-cd dependency_inversion/build
+cd dependency-inversion/build
 ./naive_approach
 ```
 To run the dependency inverted example:
 ```
-cd dependency_inversion/build
+cd dependency-inversion/build
 ./di_approach
 ```
 ## Python
@@ -54,12 +54,12 @@ In Python, an abstract (`ABC`) class with `@abstractmethod` methods defines an i
 
 To run the naive example:
 ```
-cd dependency_inversion/python
+cd dependency-inversion/python
 python naive.py
 ```
 To run the dependency inverted example:
 ```
-cd dependency_inversion/python
+cd dependency-inversion/python
 python di_approach.py
 ```
 
