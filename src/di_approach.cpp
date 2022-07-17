@@ -1,9 +1,7 @@
 #include "path_follower.h"
-#include "pid_controller.h"
-
 
 int main() {
-  pidController pid{};
+  ControllerImpl pid{};
   PathFollower pathFollower{pid};
 
   pathFollower.moveForward();
