@@ -8,9 +8,9 @@ class ControllerInterface(ABC):
 class PIDController(ControllerInterface):
     def update(self, direction: int):
         if direction > 0:
-            print("Increasing forward velocity")
+            print("Increasing forward velocity from PID")
         elif direction < 0:
-            print("Increasing backward velocity")
+            print("Increasing backward velocity from PID")
 
 class PathFollower:
     def __init__(self, controller: ControllerInterface):

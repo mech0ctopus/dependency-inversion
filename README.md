@@ -16,28 +16,29 @@ A naive implementation of how we might design these classes is shown in the seco
 ### Naive Implemention (without dependency inversion):
 ![NaiveDiagram](assets/naive.JPG)
 
-The dependency-inverted implementation is shown in the third diagram. Notice that `PathFollower` does not inherit from `PIDController` directly.
+The dependency-inverted implementation is shown in the third diagram. Notice that `PathFollower` does not inherit from `PIDController`.
 
 ### Dependency Inverted Implementation
 ![DIPDiagram](assets/dip.JPG)
 
 A few consequences of this inversion are:
-- Any controller that adheres to the interface (an abstract class) defined by `ControllerInterface` can be swapped in with minimal effort.
-- `PathFollower` doesn't need to be recompiled if `PIDController` change.
+- Any controller that adheres to the interface (an abstract class) defined by `ControllerInterface` can be swapped in with minimal effort. For instance, `MPCController` can be linked to our executable (instead of `PIDController`) without any changes to the existing source code. We just compile `MPCController` as a shared library and modify the linking behavior at compile-time via `CMake` arguments.
+- `main` and `PathFollower` do not need to be recompiled if `PIDController` changes. `main` will just be linked with the recompiled `PIDController`. 
 - As promised above, "high-level policies (`PathFollower`) are independent of modules that contain low-level details (`PIDController`).
 - Both modules (`PathFollower` and `PIDController`) depend on abstractions, not implementation details.
 
 C++ and Python examples of both the Naive and DIP implementations were built using the references linked below.
 
 ## C++
-In C++, an abstract class with virtual methods defines an interface (e.g., `ControllerInterface`) which specifies a contract that all concrete implementations of that abstract class (e.g., `PIDController`) must meet.
+In C++, an abstract class with virtual methods defines an interface (`ControllerInterface`) which specifies a contract that all concrete implementations of that abstract class (`PIDController`) must meet. A concrete implementation (`ControllerImpl`) of the abstract class is declared and promised within `controller_interface.h`. The actual definition of the concrete implementation is provided via linked library at compile-time.
 
 To compile:
 ```
 cd dependency-inversion
 mkdir build && cd build
-cmake ..
-make -j4
+# Set cmake arguments as you desire
+cmake .. -DLINK_PID=OFF -DLINK_MPC=ON
+make
 ```
 To run the naive example:
 ```
@@ -50,7 +51,7 @@ cd dependency-inversion/build
 ./di_approach
 ```
 ## Python
-In Python, an abstract (`ABC`) class with `@abstractmethod` methods defines an interface (e.g., `ControllerInterface`) which specifies a contract that all concrete implementations of that abstract class (e.g., `PIDController`) must meet.
+In Python, an abstract (`ABC`) class with `@abstractmethod` methods defines an interface (`ControllerInterface`) which specifies a contract that all concrete implementations of that abstract class (`PIDController`) must meet.
 
 To run the naive example:
 ```
