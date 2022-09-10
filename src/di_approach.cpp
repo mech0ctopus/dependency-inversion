@@ -1,8 +1,8 @@
 #include "path_follower.h"
 
 int main() {
-  ControllerImpl pid{};
-  PathFollower pathFollower{pid};
+  ControllerImpl controller{};
+  PathFollower pathFollower{controller};
 
   pathFollower.moveForward();
   pathFollower.moveBackward();
